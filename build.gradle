@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.10' apply false
+    id 'io.spring.dependency-management' version '1.1.7' apply false
+}
+
+version = '0.0.1-SNAPSHOT'
+description = 'Viora'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+allprojects {
+    group = 'com.viora'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencyManagement {
+        dependencies {
+            dependency 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.15'
+        }
+    }
+
+
+    tasks.matching { it.name == "bootJar" }.configureEach {
+        enabled = false
+    }
+}

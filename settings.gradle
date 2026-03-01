@@ -1,0 +1,2 @@
+rootProject.name = 'Viora'
+include("app", "identity-access", "content-service", "streaming-and-video")

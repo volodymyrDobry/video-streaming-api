@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.viora'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Core Keycloak modules
+    implementation("org.keycloak:keycloak-core:26.5.3")
+    implementation("org.keycloak:keycloak-server-spi:26.5.3")
+    implementation("org.keycloak:keycloak-server-spi-private:26.5.3")
+    implementation("org.keycloak:keycloak-services:26.5.3")
+    implementation("org.keycloak:keycloak-saml-core-public:26.5.3")
+    // Source: https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client
+    implementation("org.keycloak:keycloak-admin-client:26.0.8")
+
+
+    // Logging
+    implementation("org.jboss.logging:jboss-logging:3.5.0.Final")
+
+    // JAX-RS API (Jakarta EE spec provided by JBoss)
+    implementation("org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.2.Final")
+
+    // Lombok (compile-time only)
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
+
+    // Testing
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+
+test {
+    useJUnitPlatform()
+}
