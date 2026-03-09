@@ -2,6 +2,7 @@ package com.viora.spi.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 import static com.viora.spi.keycloak.KeycloakProperties.*;
 
+@Slf4j
 public class KeycloakTokenHandler {
 
     @SneakyThrows
@@ -32,6 +34,7 @@ public class KeycloakTokenHandler {
 
         // Parse JSON to extract access_token
         String json = response.body();
+        log.info("Response from Keycloak: {}", json);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readTree(json)
                 .get("access_token")

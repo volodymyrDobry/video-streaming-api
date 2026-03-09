@@ -3,7 +3,7 @@ package com.viora.contentservice.infrastructure.persistance.adapter;
 import com.viora.contentservice.domain.domain.Actor;
 import com.viora.contentservice.domain.port.out.ActorsRepository;
 import com.viora.contentservice.infrastructure.persistance.model.ActorModel;
-import com.viora.contentservice.infrastructure.persistance.repository.JpaActorsRepository;
+import com.viora.contentservice.infrastructure.persistance.repository.MongoActorsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JpaActorsRepositoryAdapter implements ActorsRepository {
 
-    private final JpaActorsRepository jpaActorsRepository;
+    private final MongoActorsRepository mongoActorsRepository;
 
     @Override
     public Actor saveActor(Actor actor) {
         ActorModel actorModel = mapToActorModel(actor);
-        actorModel = jpaActorsRepository.save(actorModel);
+        actorModel = mongoActorsRepository.save(actorModel);
         return mapToActor(actorModel);
     }
 
     @Override
-    public Set<Actor> getActorsByIds(Set<Long> ids) {
-        return jpaActorsRepository.findAllById(ids)
+    public Set<Actor> getActorsByIds(Set<String> ids) {
+        return mongoActorsRepository.findAllById(ids)
                 .stream()
                 .map(JpaActorsRepositoryAdapter::mapToActor)
                 .collect(Collectors.toSet());
@@ -34,7 +34,7 @@ public class JpaActorsRepositoryAdapter implements ActorsRepository {
 
     @Override
     public Set<Actor> getAllActors() {
-        return jpaActorsRepository.findAll()
+        return mongoActorsRepository.findAll()
                 .stream()
                 .map(JpaActorsRepositoryAdapter::mapToActor)
                 .collect(Collectors.toSet());

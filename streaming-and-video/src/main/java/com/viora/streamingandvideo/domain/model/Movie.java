@@ -1,6 +1,7 @@
 package com.viora.streamingandvideo.domain.model;
 
 import lombok.Getter;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
@@ -9,19 +10,17 @@ import java.util.Objects;
 public class Movie {
 
     private final String id;
-    private final String name;
-    private final MultipartFile file;
+    private final Resource file;
 
-    private Movie(String id, String name, MultipartFile file) {
+    private Movie(String id, Resource file) {
         this.id = id;
-        this.name = name;
         this.file = file;
     }
 
-    public static Movie createMovie(String id, String name, MultipartFile file) {
-        if (!Objects.equals(file.getContentType(), "video/mp4")) {
-            throw new IllegalArgumentException("Only MP4 allowed");
-        }
-        return new Movie(id, name, file);
+    public static Movie createMovie(String id, Resource file) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(file);
+
+        return new Movie(id, file);
     }
 }

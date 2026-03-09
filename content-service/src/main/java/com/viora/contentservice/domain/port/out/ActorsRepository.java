@@ -8,7 +8,7 @@ public interface ActorsRepository {
 
     Actor saveActor(Actor actor);
 
-    Set<Actor> getActorsByIds(Set<Long> ids);
+    Set<Actor> getActorsByIds(Set<String> ids);
 
     Set<Actor> getAllActors();
 

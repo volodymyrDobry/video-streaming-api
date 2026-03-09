@@ -13,7 +13,7 @@ public enum ERole {
 
         @Override
         public KeycloakRole getKeycloakValue() {
-            return new KeycloakRole("5a3fa96b-53b9-4440-99c8-86b73474698d", "ROLE_USER");
+            return new KeycloakRole("280ddc2b-e895-419f-b8d2-cae23d4f2ce8", "ROLE_USER");
         }
     }, ADMIN {
         @Override
@@ -23,7 +23,7 @@ public enum ERole {
 
         @Override
         public KeycloakRole getKeycloakValue() {
-            return new KeycloakRole("e6e87add-46e1-4116-b08a-920cdcb96e9b", "ROLE_ADMIN");
+            return new KeycloakRole("76d3449a-6fd9-4ac2-ab05-266703fc06a4", "ROLE_ADMIN");
         }
     };
 

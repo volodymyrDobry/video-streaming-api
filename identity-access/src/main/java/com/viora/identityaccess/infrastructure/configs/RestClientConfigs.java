@@ -38,15 +38,6 @@ public class RestClientConfigs {
                             return execution.execute(request, body);
                         }))
                 .requestInterceptor(requestInterceptor)
-                .requestInterceptor((request, body, execution) -> {
-                    String authHeader = request.getHeaders()
-                            .getFirst("Authorization");
-                    if (authHeader != null) {
-                        log.info("TOKEN: {}", authHeader);
-                    }
-                    log.info("URI: {}", request.getURI());
-                    return execution.execute(request, body);
-                })
                 .build();
     }
 

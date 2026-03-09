@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Actor {
-    private Long id;
+    private String id;
     private String name;
 
     public static Actor createActor(String name) {

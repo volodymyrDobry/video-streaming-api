@@ -1,23 +1,20 @@
 package com.viora.contentservice.infrastructure.persistance.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name = "actors")
-@Getter
-@Setter
+@Document(collection = "actors")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ActorModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @MongoId(FieldType.OBJECT_ID)
+    private String id;
 
-    @Column(nullable = false)
+    @Field
     private String name;
 
 }

@@ -27,8 +27,8 @@ public interface StreamingApi {
     )
     @GetMapping("/movies/{id}/index.m3u8")
     ResponseEntity<Resource> getPlaylist(
-            @Parameter(description = "Movie ID", example = "1")
-            @PathVariable Long id
+            @Parameter(description = "Movie IMDB ID", example = "tt0133093")
+            @PathVariable String id
     );
 
     @Operation(
@@ -45,8 +45,8 @@ public interface StreamingApi {
     )
     @GetMapping("/movies/{id}/segment_{segment}.ts")
     ResponseEntity<Resource> getSegment(
-            @Parameter(description = "Movie ID", example = "1")
-            @PathVariable Long id,
+            @Parameter(description = "Movie IMDB ID", example = "tt0133093")
+            @PathVariable String id,
 
             @Parameter(description = "Segment number", example = "1")
             @PathVariable Long segment

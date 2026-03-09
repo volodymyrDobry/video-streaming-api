@@ -1,6 +1,6 @@
 package com.viora.contentservice.api.docs;
 
-import com.viora.contentservice.api.request.AddActorUseRequest;
+import com.viora.contentservice.api.request.AddActorRequest;
 import com.viora.contentservice.domain.domain.Actor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,7 +23,7 @@ public interface ActorsApi {
     @ApiResponse(responseCode = "400", description = "Invalid request body")
     @PostMapping
     ResponseEntity<Actor> addActor(
-            @Valid @RequestBody AddActorUseRequest request
+            @Valid @RequestBody AddActorRequest request
     );
 
     @Operation(

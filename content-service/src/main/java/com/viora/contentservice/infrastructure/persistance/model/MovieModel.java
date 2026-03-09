@@ -1,35 +1,34 @@
 package com.viora.contentservice.infrastructure.persistance.model;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "movies")
-@Getter
-@Setter
+@Document(collection = "movies")
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @MongoId(FieldType.OBJECT_ID)
+    private String id;
 
-    @Column(nullable = false)
+    @Field
     private String name;
 
-    @Column(nullable = false)
+    @Field
     private String plot;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "movie_actors",
-            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id")
-    )
-    private Set<ActorModel> actors;
+    @Field
+    private Set<MovieActorModel> actors;
 
+    @Field
     private String posterLink;
+
+    @Field
+    private String imdbId;
 }

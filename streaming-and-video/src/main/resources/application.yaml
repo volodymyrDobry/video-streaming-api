@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: streaming-and-video
+    movie-details:
+      baseUrl: ${CONTENT_SERVICE:http://localhost:8080}
+  servlet:
+    multipart:
+      max-file-size: 5GB
+      max-request-size: 5GB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/viora-dev
+      client:
+        registration:
+          video-management-client:
+            provider: keycloak
+            client-id: ${KEYCLOAK_USER_MANAGEMENT_CLIENT_ID:video-management-client}
+            client-secret: ${KEYCLOAK_USER_MANAGEMENT_CLIENT_SECRET:7o75o4qM0iy0JWBjU7N9lyEF1UIK5MU4}
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_URI:http://localhost:8081}/realms/viora-dev
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      movie-details:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+
+  retry:
+    instances:
+      movie-details:
+        maxAttempts: 3
+        waitDuration: 1s
+
+  timelimiter:
+    instances:
+      movie-details:
+        timeoutDuration: 3s
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  level:
+    org.springframework.cloud:
+    io.github.resilience4j:
+    com.viora.streamingandvideo.infrastructure.external.MovieDetailsClient:
+      DEBUG
+
+server:
+  port: ${SERVER_PORT:8083}

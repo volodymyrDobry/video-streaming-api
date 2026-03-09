@@ -1,3 +1,19 @@
 spring:
   application:
     name: content-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/viora-dev
+  data:
+    mongodb:
+      username: ${MONGO_USERNAME:root}
+      password: ${MONGO_PASSWORD:secret}
+      host: ${MONGO_HOST:localhost}
+      port: ${MONGO_PORT:27017}
+      database: ${MONGO_DATABASE:content}
+      authentication-database: ${MONGO_AUTH_DB:admin}
+
+server:
+  port: ${SERVER_PORT:8080}

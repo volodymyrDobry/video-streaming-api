@@ -10,8 +10,10 @@ public record AddMovieRequest(
         @NotEmpty
         String plot,
         @NotEmpty
-        Set<Long> actorsIds,
+        Set<String> actorsIds,
         @NotEmpty
-        String posterLink
+        String posterLink,
+        @NotEmpty
+        String imdbId
 ) {
 }

@@ -1,5 +1,6 @@
 package com.viora.streamingandvideo.infrastructure.configs;
 
+import com.viora.streamingandvideo.domain.exception.MovieAlreadyExistsException;
 import com.viora.streamingandvideo.domain.exception.MovieNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,17 @@ public class MovieRestExceptionHandler {
                 .body(new Error(LocalDateTime.now(), exception.getMessage()));
     }
 
+    @ExceptionHandler(MovieAlreadyExistsException.class)
+    public ResponseEntity<Error> handleMovieAlreadyExistsException(MovieNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new Error(LocalDateTime.now(), exception.getMessage()));
+    }
+
 
     public record Error(
             LocalDateTime timeStamp,
             String description
     ) {
-
     }
 
 }

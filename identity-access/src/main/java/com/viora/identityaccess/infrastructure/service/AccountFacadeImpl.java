@@ -15,16 +15,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AccountFacadeImpl implements AccountFacade {
 
-    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private final ManageUserAccountUseCase manageUserAccountUseCase;
     private final KeycloakClient keycloakClient;
 
@@ -33,10 +29,6 @@ public class AccountFacadeImpl implements AccountFacade {
     public Account createUserAccount(KeycloakCreateAccountRequest request) {
         Set<ERole> roles = Set.of(ERole.USER);
         CreateAccountCommand createAccountCommand = mapToCreateUserAccount(request, roles);
-        Set<KeycloakRole> keycloakRoles = mapToKeycloakRoles(roles);
-        scheduler.schedule(() -> {
-            keycloakClient.assignRoles(request.id(), keycloakRoles);
-        }, 2, TimeUnit.SECONDS);
         return createAccount(createAccountCommand);
     }
 

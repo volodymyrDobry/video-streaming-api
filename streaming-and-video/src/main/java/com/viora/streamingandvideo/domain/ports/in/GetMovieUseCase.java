@@ -3,7 +3,7 @@ package com.viora.streamingandvideo.domain.ports.in;
 import org.springframework.core.io.Resource;
 
 public interface GetMovieUseCase {
-    Resource getMoviePlayback(Long id);
+    Resource getMoviePlayback(String id);
 
-    Resource getMovieSegment(Long id, Long segmentId);
+    Resource getMovieSegment(String id, Long segmentId);
 }

@@ -4,6 +4,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7' apply false
 }
 
+ext {
+    springCloudVersion = ""
+}
+
 version = '0.0.1-SNAPSHOT'
 description = 'Viora'
 
@@ -36,13 +40,11 @@ subprojects {
     }
 
     dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.0.0"
+        }
         dependencies {
             dependency 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.15'
         }
-    }
-
-
-    tasks.matching { it.name == "bootJar" }.configureEach {
-        enabled = false
     }
 }

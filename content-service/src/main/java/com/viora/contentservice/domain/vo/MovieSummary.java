@@ -1,8 +1,7 @@
 package com.viora.contentservice.domain.vo;
 
-import com.viora.contentservice.domain.domain.Poster;
-
 public record MovieSummary(
+        String id,
         String name,
         Poster poster
 ) {

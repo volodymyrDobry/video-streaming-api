@@ -5,4 +5,6 @@ import com.viora.contentservice.domain.port.in.command.AddMovieCommand;
 
 public interface ManageMovieDetailsUseCase {
     MovieDetails addMovieDetails(AddMovieCommand command);
+
+    void addMoviePlayer(String movieId, String movieUrl);
 }

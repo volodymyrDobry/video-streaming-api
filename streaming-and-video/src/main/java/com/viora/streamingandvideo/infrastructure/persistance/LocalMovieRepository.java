@@ -1,6 +1,7 @@
 package com.viora.streamingandvideo.infrastructure.persistance;
 
 import com.viora.streamingandvideo.domain.model.Movie;
+import com.viora.streamingandvideo.domain.model.MovieDetails;
 import com.viora.streamingandvideo.domain.ports.out.MovieRepository;
 import lombok.SneakyThrows;
 import org.springframework.core.io.FileSystemResource;
@@ -20,21 +21,19 @@ public class LocalMovieRepository implements MovieRepository {
     private static final String ROOT_SEGMENTS_FOLDER_PATH = "../movies/segments/";
     private static final int MINIMAL_SEGMENT_ID_LENGTH = 3;
 
-    @Override
-    public void saveMovie(Movie movie) {
-        saveUploadedMovie(movie);
-    }
-
     @SneakyThrows
-    private void saveUploadedMovie(Movie movie) {
-        String savedMoviePath = ROOT_UPLOADS_FOLDER_PATH + movie.getId() + '-' + movie.getName() + ".mp4";
-        MultipartFile movieFile = movie.getFile();
-        Path uploadPath =
-                Files.createDirectories(
-                        Paths.get(savedMoviePath));
-        Files.copy(movieFile.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
-        Path outputSegmentPath = Path.of(ROOT_SEGMENTS_FOLDER_PATH + "/" + movie.getId());
+    @Override
+    public Movie saveMovie(MovieDetails movieDetails, MultipartFile movie) {
+        String imdbId = movieDetails.imdbId();
+        String filename = movie.getOriginalFilename() == null ? "movie.mp4" : movie.getOriginalFilename();
+        Path uploadDir = Files.createDirectories(Paths.get(ROOT_UPLOADS_FOLDER_PATH, imdbId));
+        Path uploadPath = uploadDir.resolve(filename);
+        Files.copy(movie.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
+        Path outputSegmentPath = Path.of(ROOT_SEGMENTS_FOLDER_PATH, imdbId);
         segmentVideo(uploadPath, outputSegmentPath);
+
+        Resource movieResource = getMoviePlayback(imdbId);
+        return Movie.createMovie(imdbId, movieResource);
     }
 
     @Override

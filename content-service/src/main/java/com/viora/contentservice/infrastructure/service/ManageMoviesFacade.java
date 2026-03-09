@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ManageMoviesFacade {
 
-    MovieDetails addMovie(AddMovieRequest request, MultipartFile multipartFile);
+    MovieDetails addMovie(AddMovieRequest request);
 
 }

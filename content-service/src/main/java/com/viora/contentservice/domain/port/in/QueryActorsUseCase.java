@@ -8,4 +8,6 @@ public interface QueryActorsUseCase {
 
     Set<Actor> getAllActors();
 
+    Set<Actor> getActorsByIds(Set<String> actorIds);
+
 }

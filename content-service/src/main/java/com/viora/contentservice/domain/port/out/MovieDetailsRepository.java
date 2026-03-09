@@ -10,7 +10,9 @@ public interface MovieDetailsRepository {
 
     Set<MovieSummary> getMoviesSummariesByName(String name);
 
-    MovieDetails getMovieDetailsById(Long id);
+    MovieDetails getMovieDetailsById(String id);
 
     Set<MovieSummary> getAllMovies();
+
+    MovieDetails getMovieByImdbId(String imdbId);
 }

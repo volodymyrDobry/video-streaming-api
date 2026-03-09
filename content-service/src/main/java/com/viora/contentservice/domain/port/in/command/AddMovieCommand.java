@@ -8,7 +8,8 @@ import java.util.Set;
 public record AddMovieCommand(
         String name,
         String plot,
-        Set<Long> actorsIds,
-        String posterLink
+        Set<String> actorsIds,
+        String posterLink,
+        String imdbId
 ) {
 }

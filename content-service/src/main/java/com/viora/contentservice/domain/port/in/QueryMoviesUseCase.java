@@ -6,7 +6,9 @@ import com.viora.contentservice.domain.vo.MovieSummary;
 import java.util.Set;
 
 public interface QueryMoviesUseCase {
-    MovieDetails getMovieById(Long id);
+    MovieDetails getMovieById(String id);
 
     Set<MovieSummary> getMoviesByName(String summary);
+
+    MovieDetails getMovieByImdbId(String imdbId);
 }
