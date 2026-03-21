@@ -31,4 +31,7 @@ public class MovieModel {
 
     @Field
     private String imdbId;
+
+    @Field
+    private String playerUrl;
 }

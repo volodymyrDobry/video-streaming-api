@@ -3,10 +3,34 @@ spring:
     name: streaming-and-video
     movie-details:
       baseUrl: ${CONTENT_SERVICE:http://localhost:8080}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5431/streaming_and_video}
+    hikari:
+      maximum-pool-size: 10
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      validation-timeout: 5000
+      leak-detection-threshold: 60000
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
   servlet:
     multipart:
       max-file-size: 5GB
       max-request-size: 5GB
+
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+
   security:
     oauth2:
       resourceserver:

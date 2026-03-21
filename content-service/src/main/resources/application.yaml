@@ -6,6 +6,12 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8081/realms/viora-dev
+
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+
   data:
     mongodb:
       username: ${MONGO_USERNAME:root}

@@ -85,7 +85,38 @@ services:
       - STORAGE_TYPE=mem
       - JAVA_OPTS=-Xms512m -Xmx1024m
 
+  streaming_and_video_db:
+    image: postgres:17
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_DB: streaming_and_video
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - streaming_and_video_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  activemq:
+    image: rmohr/activemq:latest
+    container_name: activemq
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN=admin
+      - ACTIVEMQ_ADMIN_PASSWORD=admin
+    volumes:
+      - activemq-data:/opt/activemq/data
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   keycloak_data:
   content_data:
+  streaming_and_video_data:
+  activemq-data:

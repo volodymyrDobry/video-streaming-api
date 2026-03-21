@@ -32,7 +32,7 @@ public class MovieService implements SaveMovieUseCase, GetMovieUseCase {
             throw new MovieAlreadyExistsException("Movie with imdbId " + command.imdbId() + " already exists");
         }
         Movie savedMovie = movieRepository.saveMovie(movieDetails, command.movie());
-        applicationEventPublisher.publishEvent(new SaveMovieEvent(this, savedMovie, movieDetails.imdbId()));
+        applicationEventPublisher.publishEvent(new SaveMovieEvent(this, savedMovie, movieDetails.id()));
 
         return savedMovie;
     }

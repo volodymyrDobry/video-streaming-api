@@ -69,6 +69,7 @@ public class JpaMovieRepositoryAdapter implements MovieDetailsRepository {
                         .img())
                 .actors(actors)
                 .imdbId(movie.getImdbId())
+                .playerUrl(movie.getPlayer().url())
                 .build();
     }
 
