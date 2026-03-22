@@ -40,12 +40,5 @@ public class ApplicationProperties {
         return properties;
     }
 
-//    private String getFilePath() {
-//        ClassLoader classLoader = getClass().getClassLoader();
-//        File file = new File(classLoader.getResource(ApplicationProperties.DEFAULT_PROPERTIES_PATH)
-//                .getFile());
-//        return file.getAbsolutePath();
-//    }
-
 
 }

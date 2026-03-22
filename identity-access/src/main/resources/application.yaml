@@ -2,7 +2,11 @@ spring:
   application:
     name: identity-access
     keycloak:
-      url: ${KEYCLOAK_URI:http://localhost:8080}
+      url: ${KEYCLOAK_URI:http://localhost:8081}
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
   datasource:
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USERNAME:postgres}
@@ -25,7 +29,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/viora-dev}
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8081/realms/viora-dev}
       client:
         registration:
           user-management-client:
@@ -35,6 +39,6 @@ spring:
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URI:http://localhost:8080}/realms/viora-dev
+            issuer-uri: ${KEYCLOAK_URI:http://localhost:8081}/realms/viora-dev
 server:
   port: ${SERVER_PORT:8082}
