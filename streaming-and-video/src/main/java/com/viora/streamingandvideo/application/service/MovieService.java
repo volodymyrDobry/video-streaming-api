@@ -1,6 +1,7 @@
 package com.viora.streamingandvideo.application.service;
 
 import com.viora.streamingandvideo.application.event.SaveMovieEvent;
+import com.viora.streamingandvideo.application.event.WatchMovieEvent;
 import com.viora.streamingandvideo.domain.exception.MovieAlreadyExistsException;
 import com.viora.streamingandvideo.domain.model.Movie;
 import com.viora.streamingandvideo.domain.model.MovieDetails;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -50,6 +52,12 @@ public class MovieService implements SaveMovieUseCase, GetMovieUseCase {
         if (id == null || segmentId == null) {
             throw new IllegalArgumentException("Neither id nor segmentId can be null");
         }
+        applicationEventPublisher.publishEvent(new WatchMovieEvent(this, getUserId(), id, segmentId));
         return movieRepository.getMovieSegment(id, segmentId);
+    }
+
+
+    private String getUserId() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
