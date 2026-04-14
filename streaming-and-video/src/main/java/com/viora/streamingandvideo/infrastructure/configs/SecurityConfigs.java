@@ -12,12 +12,13 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 
 @Configuration
 public class SecurityConfigs {
 
     @Bean
-    public SecurityFilterChain httpSecurity(HttpSecurity httpSecurity) throws
+    public SecurityFilterChain httpSecurity(HttpSecurity httpSecurity, GatewayHeadersFilter gatewayHeadersFilter) throws
             Exception {
 
         httpSecurity.oauth2ResourceServer(configurer -> {
@@ -36,6 +37,11 @@ public class SecurityConfigs {
         });
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.addFilterBefore(gatewayHeadersFilter, AnonymousAuthenticationFilter.class);
+        httpSecurity.httpBasic(AbstractHttpConfigurer::disable);
+        httpSecurity.formLogin(AbstractHttpConfigurer::disable);
+        httpSecurity.logout(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();
     }

@@ -53,6 +53,14 @@ public class JpaMovieRepositoryAdapter implements MovieDetailsRepository {
     }
 
     @Override
+    public Set<MovieSummary> getMoviesByImdbIds(Collection<String> imdbIds) {
+        return jpaMovieRepository.getAllByImdbIdIn(imdbIds)
+                .stream()
+                .map(m -> new MovieSummary(m.getId(), m.getName(), new Poster(m.getPosterLink())))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public MovieDetails getMovieByImdbId(String imdbId) {
         return jpaMovieRepository.getMovieModelByImdbId(imdbId)
                 .map(this::mapToMovie)

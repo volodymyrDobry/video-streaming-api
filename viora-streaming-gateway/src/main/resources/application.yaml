@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: viora-streaming-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: streaming-and-video
+              uri: http://localhost:8083
+              predicates:
+                - Path=/api/streaming/**
+              filters:
+                - StripPrefix=2
+
+            - id: content-service
+              uri: http://localhost:8080
+              predicates:
+                - Path=/api/content/**
+              filters:
+                - StripPrefix=2
+
+            - id: identity-access
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/identity/**
+              filters:
+                - StripPrefix=2
+
+            - id: user-streaming-history
+              uri: http://localhost:8085
+              predicates:
+                - Path=/api/user-history/**, /api/user-history
+              filters:
+                - StripPrefix=2
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URI:http://localhost:8081}/realms/viora-dev
+
+
+server:
+  port: 8084
+
+services:
+  user-history:
+    base-url: ${USER_HISTORY_SERVICE_URL:http://localhost:8085}
+  content:
+    base-url: ${CONTENT_SERVICE_URL:http://localhost:8080}
+    movie-by-imdb-path: ${CONTENT_MOVIE_BY_IMDB_PATH:/api/v1/movies/by-imdb}

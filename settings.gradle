@@ -1,2 +1,9 @@
 rootProject.name = 'Viora'
-include("common", "identity-access", "content-service", "streaming-and-video")
+include(
+        "common",
+        "identity-access",
+        "content-service",
+        "streaming-and-video",
+        "user-streaming-history",
+        "viora-streaming-gateway"
+)

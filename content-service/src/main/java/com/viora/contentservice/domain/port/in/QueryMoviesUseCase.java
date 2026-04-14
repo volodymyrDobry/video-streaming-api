@@ -11,4 +11,6 @@ public interface QueryMoviesUseCase {
     Set<MovieSummary> getMoviesByName(String summary);
 
     MovieDetails getMovieByImdbId(String imdbId);
+
+    Set<MovieSummary> getMoviesByImdbIds(Set<String> imdbIds);
 }

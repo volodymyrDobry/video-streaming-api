@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,6 +53,11 @@ public class MovieController implements MovieApi {
     public ResponseEntity<Void> setMoviePlayer(String movieId, AddPlayerRequest request) {
         manageMovieDetailsUseCase.addMoviePlayer(movieId, request.playerUrl());
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Collection<MovieSummary>> getMoviesByImdbIds(Set<String> imdbIds) {
+        return ResponseEntity.ok(queryMoviesUseCase.getMoviesByImdbIds(imdbIds));
     }
 
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -43,5 +44,13 @@ public class QueryMoviesService implements QueryMoviesUseCase {
         }
         return Optional.ofNullable(movieRepository.getMovieByImdbId(imdbId))
                 .orElseThrow(() -> new MovieNotFoundException("Movie with imdbId %s was not found".formatted(imdbId)));
+    }
+
+    @Override
+    public Set<MovieSummary> getMoviesByImdbIds(Set<String> imdbIds) {
+        if (imdbIds != null && !imdbIds.isEmpty()) {
+            return Set.of();
+        }
+        return movieRepository.getMoviesByImdbIds(imdbIds);
     }
 }

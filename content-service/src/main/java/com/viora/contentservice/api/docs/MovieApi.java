@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Tag(name = "Movies", description = "Operations related to movies")
 @RequestMapping("/api/v1/movies")
@@ -87,6 +88,17 @@ public interface MovieApi {
             @Parameter(description = "Movie IMDB id", example = "1")
             @PathVariable String movieId,
             @RequestParam AddPlayerRequest request
+    );
+
+    @Operation(
+            summary = "Retrieve movies by imdb id",
+            description = "Returns list of movies matching provided imdb ids"
+    )
+    @ApiResponse(responseCode = "200", description = "Movies retrieved")
+    @GetMapping("/by-imdb")
+    ResponseEntity<Collection<MovieSummary>> getMoviesByImdbIds(
+            @Parameter(description = "Movie name to search", example = "Spider-Man")
+            @RequestParam Set<String> imdbIds
     );
 
 

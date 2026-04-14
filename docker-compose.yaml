@@ -17,6 +17,26 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+
+  streaming-history-service-db:
+    image: 'mongo:latest'
+    container_name: streaming-history-db
+    ports:
+      - '27018:27017'
+    environment:
+      - 'MONGO_INITDB_DATABASE=streaming-history'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+      - 'MONGO_INITDB_ROOT_USERNAME=root'
+    volumes:
+      - streaming_history_data:/data/db
+    healthcheck:
+      test:
+        "echo 'db.runCommand({ ping: 1 }).ok' | mongosh admin -u root -p secret --quiet | grep 1"
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
   postgres_db:
     image: postgres:17
     ports:
@@ -120,3 +140,4 @@ volumes:
   content_data:
   streaming_and_video_data:
   activemq-data:
+  streaming_history_data:
