@@ -1,9 +1,9 @@
 package org.example.userstreaminghistory.api.activemq.ports;
 
-import org.example.userstreaminghistory.api.activemq.message.SaveHistoryEventFailure;
+import com.viora.app.message.UserHistoryFailedEvent;
 
 public interface UserHistoryEventHandler {
 
-    void handleSaveHistoryFailure(SaveHistoryEventFailure failure);
+    void handleSaveHistoryFailure(UserHistoryFailedEvent failure);
 
 }

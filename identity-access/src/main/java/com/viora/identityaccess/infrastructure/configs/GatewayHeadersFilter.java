@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -26,17 +26,13 @@ public class GatewayHeadersFilter extends OncePerRequestFilter {
     public static final String USERNAME_HEADER = "X-User-Username";
     public static final String ROLES_HEADER = "X-User-Roles";
 
-    public static final String USER_ID_ATTRIBUTE = "gateway.userId";
-    public static final String USERNAME_ATTRIBUTE = "gateway.username";
-    public static final String ROLES_ATTRIBUTE = "gateway.roles";
-    public static final String AUTHENTICATION_SOURCE = "gateway-headers";
+    public static final String USER_ID_ATTRIBUTE = "userId";
+    public static final String USERNAME_ATTRIBUTE = "username";
+    public static final String ROLES_ATTRIBUTE = "roles";
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
         String userId = request.getHeader(USER_ID_HEADER);
         String username = request.getHeader(USERNAME_HEADER);
         String rolesHeader = request.getHeader(ROLES_HEADER);
@@ -58,18 +54,11 @@ public class GatewayHeadersFilter extends OncePerRequestFilter {
                     .map(GrantedAuthority.class::cast)
                     .toList();
 
-            String principal = username == null || username.isBlank() ? userId : username;
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    principal,
+                    userId,
                     null,
                     authorities
             );
-            authentication.setDetails(Map.of(
-                    USER_ID_ATTRIBUTE, userId,
-                    USERNAME_ATTRIBUTE, username,
-                    ROLES_ATTRIBUTE, roles,
-                    "source", AUTHENTICATION_SOURCE
-            ));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

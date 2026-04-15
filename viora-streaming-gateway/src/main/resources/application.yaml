@@ -5,21 +5,19 @@ spring:
   cloud:
     gateway:
       server:
-        webmvc:
+        webflux:
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
           routes:
             - id: streaming-and-video
               uri: http://localhost:8083
               predicates:
-                - Path=/api/streaming/**
-              filters:
-                - StripPrefix=2
+                - Path=/api/v1/streaming/**
 
             - id: content-service
               uri: http://localhost:8080
               predicates:
-                - Path=/api/content/**
-              filters:
-                - StripPrefix=2
+                - Path=/api/v1/movies/**,/api/v1/movies
 
             - id: identity-access
               uri: http://localhost:8082

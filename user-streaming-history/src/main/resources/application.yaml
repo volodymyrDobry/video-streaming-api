@@ -10,3 +10,11 @@ spring:
       port: ${MONGO_PORT:27018}
       database: ${MONGO_DATABASE:streaming-history}
       authentication-database: ${MONGO_AUTH_DB:admin}
+
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+
+server:
+  port: 8085

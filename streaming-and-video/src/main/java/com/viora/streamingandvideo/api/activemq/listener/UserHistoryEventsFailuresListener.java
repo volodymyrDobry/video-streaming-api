@@ -1,6 +1,7 @@
 package com.viora.streamingandvideo.api.activemq.listener;
 
-import com.viora.streamingandvideo.api.activemq.events.UserHistoryFailedEvent;
+
+import com.viora.app.message.UserHistoryFailedEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;

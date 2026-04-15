@@ -6,11 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:63342",
-        allowedHeaders = {"Authorization", "Range", "Content-Type"},
-        methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.HEAD})
 @RestController
 @RequiredArgsConstructor
 public class VideoStreamingController implements StreamingApi {

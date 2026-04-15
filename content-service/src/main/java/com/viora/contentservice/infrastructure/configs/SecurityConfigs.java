@@ -10,9 +10,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfigs {
-
-    private static final String ADMIN_ROLE = "ADMIN";
-
     @Bean
     public SecurityFilterChain httpSecurity(
             HttpSecurity httpSecurity,
@@ -21,8 +18,6 @@ public class SecurityConfigs {
             Exception {
 
         httpSecurity.authorizeHttpRequests(requestRegistry -> {
-            requestRegistry.requestMatchers("/api/v1/movies", "/api/v1/actors")
-                    .hasRole(ADMIN_ROLE);
             requestRegistry.requestMatchers(HttpMethod.OPTIONS)
                     .permitAll();
             requestRegistry.requestMatchers("/swagger-ui/*", "/v3/api-docs", "/v3/api-docs.yaml", "/v3/api-docs/*")

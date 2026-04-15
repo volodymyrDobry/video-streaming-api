@@ -3,6 +3,7 @@ package org.example.viorastreaminggateway.api;
 import lombok.RequiredArgsConstructor;
 import org.example.viorastreaminggateway.application.service.UserHistoryAggregationService;
 import org.example.viorastreaminggateway.domain.model.AggregatedUserHistory;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,8 @@ public class UserHistoryAggregationController {
     private final UserHistoryAggregationService userHistoryAggregationService;
 
     @GetMapping("/aggregated")
-    public ResponseEntity<List<AggregatedUserHistory>> getAggregatedHistory() {
-        return ResponseEntity.ok(userHistoryAggregationService.getAggregatedUserHistory());
+    public ResponseEntity<List<AggregatedUserHistory>> getAggregatedHistory(JwtAuthenticationToken jwtAuthenticationToken) {
+        String userId = jwtAuthenticationToken.getToken().getSubject();
+        return ResponseEntity.ok(userHistoryAggregationService.getAggregatedUserHistory(userId));
     }
 }

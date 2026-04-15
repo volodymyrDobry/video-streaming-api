@@ -5,5 +5,5 @@ import org.example.viorastreaminggateway.domain.model.AggregatedUserHistory;
 import java.util.List;
 
 public interface GetAggregatedUserHistoryUseCase {
-    List<AggregatedUserHistory> getAggregatedUserHistory();
+    List<AggregatedUserHistory> getAggregatedUserHistory(String userId);
 }

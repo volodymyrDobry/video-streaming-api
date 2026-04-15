@@ -8,6 +8,7 @@ import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -15,11 +16,8 @@ import java.util.List;
 
 import static org.example.viorastreaminggateway.infrastructure.configs.security.JwtHelpersUtils.extractRoles;
 
+@Component
 public class JwtContextFilter implements GlobalFilter, Ordered {
-
-    public static final String USER_ID_ATTRIBUTE = "userId";
-    public static final String USERNAME_ATTRIBUTE = "username";
-    public static final String ROLES_ATTRIBUTE = "roles";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

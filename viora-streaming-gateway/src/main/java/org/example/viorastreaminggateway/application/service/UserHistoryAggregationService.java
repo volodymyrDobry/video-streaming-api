@@ -7,8 +7,6 @@ import org.example.viorastreaminggateway.domain.model.UserHistory;
 import org.example.viorastreaminggateway.domain.ports.in.GetAggregatedUserHistoryUseCase;
 import org.example.viorastreaminggateway.domain.ports.out.MovieRepository;
 import org.example.viorastreaminggateway.domain.ports.out.UserHistoryRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +23,8 @@ public class UserHistoryAggregationService implements GetAggregatedUserHistoryUs
 
 
     @Override
-    public List<AggregatedUserHistory> getAggregatedUserHistory() {
-        List<UserHistory> userHistories = userHistoryRepository.getUserHistories(getUserId());
+    public List<AggregatedUserHistory> getAggregatedUserHistory(String userId) {
+        List<UserHistory> userHistories = userHistoryRepository.getUserHistories(userId);
         Set<String> movieIds = userHistories.stream().map(UserHistory::movieId).collect(Collectors.toSet());
 
         List<Movie> movies = movieRepository.getMoviesByImdbIds(movieIds);
@@ -40,13 +38,6 @@ public class UserHistoryAggregationService implements GetAggregatedUserHistoryUs
 
     private Map<String, Movie> mapToMovieIdMap(List<Movie> movies) {
         return movies.stream().collect(Collectors.toMap(Movie::movieId, movie -> movie));
-    }
-
-    private String getUserId() {
-        if (SecurityContextHolder.getContext().getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
-            return jwtAuth.getToken().getSubject();
-        }
-        throw new RuntimeException("No user logged in");
     }
 
 }

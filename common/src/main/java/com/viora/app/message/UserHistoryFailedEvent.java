@@ -1,4 +1,4 @@
-package com.viora.streamingandvideo.api.activemq.events;
+package com.viora.app.message;
 
 public record UserHistoryFailedEvent(
         String userId,

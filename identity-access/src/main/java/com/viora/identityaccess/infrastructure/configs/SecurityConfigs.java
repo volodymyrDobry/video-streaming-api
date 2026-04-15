@@ -10,9 +10,6 @@ import org.springframework.security.web.authentication.AnonymousAuthenticationFi
 
 @Configuration
 public class SecurityConfigs {
-    private static final String ADMIN_ROLE = "ADMIN";
-    private static final String SERVICE_ROLE = "SERVICE";
-
     @Bean
     public SecurityFilterChain httpSecurity(
             HttpSecurity httpSecurity,
@@ -24,10 +21,6 @@ public class SecurityConfigs {
         });
 
         httpSecurity.authorizeHttpRequests(requestRegistry -> {
-            requestRegistry.requestMatchers("/api/v1/admin/accounts/keycloak")
-                    .hasRole(SERVICE_ROLE);
-            requestRegistry.requestMatchers("/api/v1/admin/accounts")
-                    .hasRole(ADMIN_ROLE);
             requestRegistry.requestMatchers("/swagger-ui/*", "/v3/api-docs", "/v3/api-docs.yaml", "/v3/api-docs/*")
                     .permitAll();
             requestRegistry.requestMatchers("/actuator/health")
