@@ -1,7 +1,6 @@
 spring:
   application:
     name: user-streaming-history
-
   data:
     mongodb:
       username: ${MONGO_USERNAME:root}
@@ -10,12 +9,20 @@ spring:
       port: ${MONGO_PORT:27018}
       database: ${MONGO_DATABASE:streaming-history}
       authentication-database: ${MONGO_AUTH_DB:admin}
-
   activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: admin
+    broker-url: ${ACTIVEMQ_BROKER_URL:tcp://localhost:61616}
+    user: ${ACTIVEMQ_USER:admin}
+    password: ${ACTIVEMQ_PASSWORD:admin}
 
 server:
-  port: 8085
+  port: ${SERVER_PORT:8085}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
 

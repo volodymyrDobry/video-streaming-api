@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://postgres-stage:5432/streaming_and_video_stage
+    hikari:
+      maximum-pool-size: 20
+
+logging:
+  level:
+    root: WARN
+    com.viora: INFO
+    io.github.resilience4j: WARN
+
+management:
+  tracing:
+    sampling:
+      probability: 0.5
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+server:
+  port: 8083
+

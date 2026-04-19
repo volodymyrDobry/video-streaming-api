@@ -3,34 +3,30 @@ spring:
     name: streaming-and-video
     movie-details:
       baseUrl: ${CONTENT_SERVICE:http://localhost:8080}
-
   datasource:
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
     url: ${POSTGRES_URL:jdbc:postgresql://localhost:5431/streaming_and_video}
     hikari:
-      maximum-pool-size: 10
-      idle-timeout: 300000
-      max-lifetime: 1800000
-      connection-timeout: 30000
-      validation-timeout: 5000
-      leak-detection-threshold: 60000
+      maximum-pool-size: ${HIKARI_MAX_POOL_SIZE:10}
+      idle-timeout: ${HIKARI_IDLE_TIMEOUT:300000}
+      max-lifetime: ${HIKARI_MAX_LIFETIME:1800000}
+      connection-timeout: ${HIKARI_CONNECTION_TIMEOUT:30000}
+      validation-timeout: ${HIKARI_VALIDATION_TIMEOUT:5000}
+      leak-detection-threshold: ${HIKARI_LEAK_DETECTION:60000}
   jpa:
     hibernate:
       ddl-auto: create
-    show-sql: true
-
+    show-sql: ${JPA_SHOW_SQL:false}
   servlet:
     multipart:
       max-file-size: 5GB
       max-request-size: 5GB
-
   activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: admin
-
+    broker-url: ${ACTIVEMQ_BROKER_URL:tcp://localhost:61616}
+    user: ${ACTIVEMQ_USER:admin}
+    password: ${ACTIVEMQ_PASSWORD:admin}
   security:
     oauth2:
       resourceserver:
@@ -55,13 +51,11 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 3
-
   retry:
     instances:
       movie-details:
         maxAttempts: 3
         waitDuration: 1s
-
   timelimiter:
     instances:
       movie-details:
@@ -71,13 +65,10 @@ management:
   tracing:
     sampling:
       probability: 1.0
-
-logging:
-  level:
-    org.springframework.cloud:
-    io.github.resilience4j:
-    com.viora.streamingandvideo.infrastructure.external.MovieDetailsClient:
-      DEBUG
+  endpoints:
+    web:
+      exposure:
+        include: health,info
 
 server:
   port: ${SERVER_PORT:8083}

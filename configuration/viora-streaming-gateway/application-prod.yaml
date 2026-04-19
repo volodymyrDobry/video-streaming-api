@@ -1,0 +1,52 @@
+spring:
+  data:
+    redis:
+      host: redis-prod
+      port: 6379
+      ssl: true
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: streaming-and-video
+              uri: http://streaming-and-video:8083
+            - id: content-service
+              uri: http://content-service:8080
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 2000
+                    redis-rate-limiter.burstCapacity: 5000
+            - id: identity-access
+              uri: http://identity-access:8082
+            - id: user-streaming-history
+              uri: http://user-streaming-history:8085
+
+logging:
+  level:
+    root: ERROR
+    com.viora: WARN
+    org.springframework.cloud.gateway: ERROR
+
+server:
+  port: 8084
+  compression:
+    enabled: true
+    min-response-size: 1024
+
+management:
+  tracing:
+    sampling:
+      probability: 0.1
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+services:
+  user-history:
+    base-url: http://user-streaming-history:8085
+  content:
+    base-url: http://content-service:8080
+

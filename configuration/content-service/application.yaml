@@ -5,13 +5,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/realms/viora-dev
-
+          issuer-uri: ${KEYCLOAK_URI:http://localhost:8081}/realms/viora-dev
   activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: admin
-
+    broker-url: ${ACTIVEMQ_BROKER_URL:tcp://localhost:61616}
+    user: ${ACTIVEMQ_USER:admin}
+    password: ${ACTIVEMQ_PASSWORD:admin}
   data:
     mongodb:
       username: ${MONGO_USERNAME:root}
@@ -23,4 +21,13 @@ spring:
 
 server:
   port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
 

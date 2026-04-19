@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/viora_identity_dev
+  liquibase:
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.viora: DEBUG
+    org.springframework.security: DEBUG
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,configprops
+  endpoint:
+    health:
+      show-details: always
+

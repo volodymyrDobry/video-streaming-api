@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:postgresql://localhost:5431/streaming_and_video_dev
+
+logging:
+  level:
+    root: INFO
+    com.viora: DEBUG
+    io.github.resilience4j: DEBUG
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,configprops
+  endpoint:
+    health:
+      show-details: always
+
+server:
+  port: 8083
+

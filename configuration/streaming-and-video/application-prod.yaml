@@ -1,0 +1,50 @@
+spring:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://postgres-prod:5432/streaming_and_video_prod
+    hikari:
+      maximum-pool-size: 30
+      maximum-lifetime: 1200000
+
+logging:
+  level:
+    root: ERROR
+    com.viora: WARN
+    io.github.resilience4j: ERROR
+
+management:
+  tracing:
+    sampling:
+      probability: 0.1
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+server:
+  port: 8083
+  compression:
+    enabled: true
+    min-response-size: 1024
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      movie-details:
+        slidingWindowSize: 50
+        failureRateThreshold: 70
+        waitDurationInOpenState: 30s
+        permittedNumberOfCallsInHalfOpenState: 5
+  retry:
+    instances:
+      movie-details:
+        maxAttempts: 5
+        waitDuration: 2s
+  timelimiter:
+    instances:
+      movie-details:
+        timeoutDuration: 5s
+

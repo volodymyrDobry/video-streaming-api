@@ -1,0 +1,22 @@
+spring:
+  data:
+    mongodb:
+      host: mongo-stage
+      port: 27018
+      database: streaming-history-stage
+      auth-source: admin
+
+logging:
+  level:
+    root: WARN
+    com.viora: INFO
+
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
