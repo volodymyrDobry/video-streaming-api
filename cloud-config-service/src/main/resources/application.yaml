@@ -1,3 +1,6 @@
+server:
+  port: 8888
+
 spring:
   application:
     name: cloud-config-service
@@ -10,6 +13,9 @@ spring:
           search-locations:
             - file:../${CONFIG_SEARCH_PATH:configuration}
             - file:../${CONFIG_SEARCH_PATH:configuration}/{application}
+logging:
+  level:
+    org.springframework.cloud: TRACE
 ---
 spring:
   config:
@@ -19,9 +25,8 @@ spring:
     config:
       server:
         git:
+          search-paths: configuration
           uri: ${CONFIG_REPO_URI:https://github.com/volodymyrDobry/video-streaming-api}
-          default-label: ${SPRING_PROFILES_ACTIVE:dev}
+#          default-label: ${SPRING_PROFILES_ACTIVE:dev}
           clone-on-start: true
           force-pull: true
-server:
-  port: 8888

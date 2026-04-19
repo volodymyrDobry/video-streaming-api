@@ -5,3 +5,6 @@ spring:
     active: ${SPRING_PROFILES_ACTIVE:dev}
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888},optional:vault://"
+logging:
+  level:
+    org.springframework.cloud: DEBUG
