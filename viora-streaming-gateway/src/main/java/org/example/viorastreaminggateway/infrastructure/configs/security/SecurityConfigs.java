@@ -37,7 +37,8 @@ public class SecurityConfigs {
                     .hasRole(ADMIN_ROLE);
             exchange.pathMatchers("/api/content/api/v1/movies", "/api/content/api/v1/actors")
                     .hasRole(ADMIN_ROLE);
-            exchange.pathMatchers("/actuator/health").permitAll();
+            exchange.pathMatchers("/actuator/health", "/actuator/metrics/**", "/actuator", "/actuator/**")
+                    .permitAll();
             exchange.pathMatchers("/swagger-ui/*", "/v3/api-docs", "/v3/api-docs.yaml", "/v3/api-docs/*")
                     .permitAll();
             exchange.pathMatchers(HttpMethod.OPTIONS).permitAll();

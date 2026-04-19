@@ -134,6 +134,29 @@ services:
       - activemq-data:/opt/activemq/data
     restart: unless-stopped
 
+  redis:
+    image: redis:7.4-alpine
+    container_name: redis-cache
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass vovanchik_2005 --appendonly yes
+    volumes:
+      - redis_data:/data
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   keycloak_data:
@@ -141,3 +164,5 @@ volumes:
   streaming_and_video_data:
   activemq-data:
   streaming_history_data:
+  redis_data:
+  prometheus_data:

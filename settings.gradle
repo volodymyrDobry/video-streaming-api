@@ -5,5 +5,6 @@ include(
         "content-service",
         "streaming-and-video",
         "user-streaming-history",
-        "viora-streaming-gateway"
+        "viora-streaming-gateway",
+        "cloud-config-service",
 )

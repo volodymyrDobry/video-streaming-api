@@ -17,7 +17,7 @@ import java.util.List;
 import static org.example.viorastreaminggateway.infrastructure.configs.security.JwtHelpersUtils.extractRoles;
 
 @Component
-public class JwtContextFilter implements GlobalFilter, Ordered {
+public class JwtContextFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -51,8 +51,8 @@ public class JwtContextFilter implements GlobalFilter, Ordered {
                 .switchIfEmpty(chain.filter(exchange));
     }
 
-    @Override
-    public int getOrder() {
-        return -1;
-    }
+//    @Override
+//    public int getOrder() {
+//        return -1;
+//    }
 }

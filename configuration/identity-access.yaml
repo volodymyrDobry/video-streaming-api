@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: identity-access
+    keycloak:
+      url: ${KEYCLOAK_URI:http://localhost:8081}
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+    hikari:
+      maximum-pool-size: 10
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      validation-timeout: 5000
+      leak-detection-threshold: 60000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  security:
+    oauth2:
+      client:
+        registration:
+          user-management-client:
+            provider: keycloak
+            client-id: ${KEYCLOAK_USER_MANAGEMENT_CLIENT_ID:user-management-client}
+            client-secret: ${KEYCLOAK_USER_MANAGEMENT_CLIENT_SECRET:9xX4ObYEIDXHHryau8tOrUnzQxS8p4js}
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_URI:http://localhost:8081}/realms/viora-dev
+server:
+  port: ${SERVER_PORT:8082}
+
