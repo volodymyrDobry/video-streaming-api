@@ -43,5 +43,6 @@ spring:
           #          default-label: dev
           clone-on-start: true
           force-pull: true
+
 encrypt:
   key: ${ENCRYPT_KEY:my-secret-key}
