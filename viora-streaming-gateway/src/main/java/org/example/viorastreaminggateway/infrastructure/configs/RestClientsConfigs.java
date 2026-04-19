@@ -1,6 +1,6 @@
 package org.example.viorastreaminggateway.infrastructure.configs;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
@@ -19,22 +19,26 @@ import static org.example.viorastreaminggateway.infrastructure.configs.security.
 @Configuration
 public class RestClientsConfigs {
 
+    private final ServiceUrlsProperties serviceUrlsProperties;
+
+    public RestClientsConfigs(ServiceUrlsProperties serviceUrlsProperties) {
+        this.serviceUrlsProperties = serviceUrlsProperties;
+    }
+
     @Bean
-    public RestClient userHistoryClient(
-            @Value("${services.user-history.base-url:http://localhost:8085}") String userHistoryServiceBaseUrl
-    ) {
+    @RefreshScope
+    public RestClient userHistoryClient() {
         return RestClient.builder()
-                .baseUrl(userHistoryServiceBaseUrl)
+                .baseUrl(serviceUrlsProperties.getUserHistory().getBaseUrl())
                 .requestInterceptor(this::intercept)
                 .build();
     }
 
     @Bean
-    public RestClient contentClient(
-            @Value("${services.content.base-url:http://localhost:8080}") String contentServiceBaseUrl
-    ) {
+    @RefreshScope
+    public RestClient contentClient() {
         return RestClient.builder()
-                .baseUrl(contentServiceBaseUrl)
+                .baseUrl(serviceUrlsProperties.getContent().getBaseUrl())
                 .requestInterceptor(this::intercept)
                 .build();
     }
