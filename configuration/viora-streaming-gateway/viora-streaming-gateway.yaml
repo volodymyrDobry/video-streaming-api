@@ -69,5 +69,5 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: refresh,health,info,busrefresh
 
