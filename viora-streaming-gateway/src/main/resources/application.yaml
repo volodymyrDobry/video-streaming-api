@@ -1,8 +1,8 @@
 spring:
   application:
     name: viora-streaming-gateway
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+#  profiles:
+#    active: ${SPRING_PROFILES_ACTIVE:dev}
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888},optional:vault://"
 logging:

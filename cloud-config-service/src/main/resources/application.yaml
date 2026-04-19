@@ -12,7 +12,7 @@ spring:
         native:
           search-locations:
             - file:../${CONFIG_SEARCH_PATH:configuration}/{application}
-#            - file:../${CONFIG_SEARCH_PATH:configuration}
+            - file:../${CONFIG_SEARCH_PATH:configuration}
 logging:
   level:
     org.springframework.cloud: TRACE
@@ -25,6 +25,7 @@ spring:
     config:
       server:
         git:
+          search-paths: configuration/{application}
           uri: ${CONFIG_REPO_URI:https://github.com/volodymyrDobry/video-streaming-api}
 #          default-label: dev
           clone-on-start: true
