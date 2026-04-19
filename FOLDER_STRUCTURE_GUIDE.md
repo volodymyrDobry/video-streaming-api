@@ -309,7 +309,7 @@ curl http://localhost:8888/identity-access/dev | jq '.profiles'
 curl http://localhost:8888/identity-access/dev | jq '.propertySources[] | .name'
 
 # Should show paths like:
-# file:/path/to/configuration/identity-access/application.yaml
+# file:/path/to/configuration/identity-access/content-service.yaml
 # file:/path/to/configuration/identity-access/application-dev.yaml
 ```
 
