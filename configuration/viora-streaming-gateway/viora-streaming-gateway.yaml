@@ -5,7 +5,7 @@ spring:
     host: ${RABBITMQ_HOST:localhost}
     port: ${RABBITMQ_PORT:5672}
     username: ${RABBITMQ_USERNAME:guest}
-    password: "{cipher}1c6983316bd2d50e7ead297e8bc0383a773aa932e95bae5dc3488b605bee8134"
+    password: ${RABBITMQ_PASSWORD:guest}
   cloud:
     gateway:
       server:
