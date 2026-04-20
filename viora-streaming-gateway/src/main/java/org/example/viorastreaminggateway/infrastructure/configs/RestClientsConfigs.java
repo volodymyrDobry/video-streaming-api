@@ -1,5 +1,6 @@
 package org.example.viorastreaminggateway.infrastructure.configs;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.example.viorastreaminggateway.infrastructure.configs.security.JwtHelpersUtils.extractRoles;
 
+@Slf4j
 @Configuration
 public class RestClientsConfigs {
 
@@ -44,6 +46,7 @@ public class RestClientsConfigs {
     }
 
     private ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+        log.info("Requesting: {}", SecurityContextHolder.getContext().getAuthentication().getClass());
         if (SecurityContextHolder.getContext().getAuthentication() instanceof JwtAuthenticationToken jwtAuth) {
             Jwt jwt = jwtAuth.getToken();
             String userId = jwt.getSubject();
